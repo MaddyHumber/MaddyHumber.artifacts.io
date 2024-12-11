@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>3D Website</title>
-    
+
     <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
 
     <link rel="stylesheet" href="styles.css">
@@ -77,14 +77,36 @@
                     <span class="read-more">Read more</span>
                 </div>
                 <div class="artifact-space">
-                    <model-viewer
-                        style="width: 100%; height: 500px;"
-                        src="./full_suit_combined_scale.glb"
-                        alt="A 3D model of an astronaut"
-                        ar
-                        auto-rotate
-                        camera-controls>
+                    <model-viewer id="spacesuit-model" style="width: 100%; height: 500px;" src="./full_suit_combined_scale.glb"
+                        alt="A 3D model of an astronaut" ar auto-rotate camera-controls> 
+                        <button class="Hotspot" slot="hotspot-2" 
+                            data-position="0.0656958686006498m 1.6682639884291408m 0.2462892795095426m"
+                            data-normal="0.2249932178342186m 0.08867091146327913m 0.9703172271937025m"
+                            data-visibility-attribute="visible"
+                            onclick="toggleHelmetView()">
+                            <div class="HotspotAnnotation">Helmet</div>
+                        </button>
+                        <div class="progress-bar hide" slot="progress-bar">
+                            <div class="update-bar"></div>
+                        </div>
+                        <button slot="ar-button" id="ar-button">
                     </model-viewer>
+                    <script>
+                        let isZoomedIn = false;
+                        function toggleHelmetView() {
+                            const modelViewer = document.getElementById('spacesuit-model');
+                            if (!isZoomedIn) {
+                                // Zoom in to helmet
+                                modelViewer.cameraOrbit = '0deg 90deg 1m';
+                                modelViewer.cameraTarget = '0.065m 1.67m 0.246m';
+                            } else {
+                                // Reset to default view
+                                modelViewer.cameraOrbit = '0deg 75deg 2m';
+                                modelViewer.cameraTarget = '0m 1m 0m';
+                            }
+                            isZoomedIn = !isZoomedIn;
+                        }
+                    </script>
                 </div>
             </div>
             <div class="artifact-images">
@@ -138,14 +160,24 @@
                     <span class="read-more">Read more</span>
                 </div>
                 <div class="artifact-space">
-                    <model-viewer
-                        style="width: 100%; height: 500px;"
-                        src="./apollo_11_lunar_extravehicular_gloves.glb"
-                        alt="A 3D model of an astronaut"
-                        ar
-                        auto-rotate
-                        camera-controls>
+                    <model-viewer id="gloves-model" style="width: 100%; height: 500px;" src="./apollo_11_lunar_extravehicular_gloves.glb"
+                        alt="A 3D model of an astronaut" ar auto-rotate camera-controls>
+                        <button class="Hotspot" slot="hotspot-1" data-position="0.0883395632388728m 0.6444672949161103m 0.2522566388347584m" data-normal="-0.09821769290844237m -0.1918399717862073m 0.9764992114819194m" data-visibility-attribute="visible" onclick="rotateGloves()">
+                            <div class="HotspotAnnotation">Rotate</div>
+                        </button>
+                        <div class="progress-bar hide" slot="progress-bar">
+                            <div class="update-bar"></div>
+                        </div>
+                        <button slot="ar-button" id="ar-button">
+                            View in your space
+                        </button>
                     </model-viewer>
+                    <script>
+                        function rotateGloves() {
+                            const modelViewer = document.getElementById('gloves-model');
+                            modelViewer.cameraOrbit = '0deg 360deg 1.5m'; // Rotate full circle
+                        }
+                    </script>
                 </div>
             </div>
             <div class="artifact-images">
@@ -206,14 +238,25 @@
                     <span class="read-more">Read more</span>
                 </div>
                 <div class="artifact-space">
-                    <model-viewer
-                        style="width: 100%; height: 500px;"
-                        src="./apollo_exterior-150k-4096.glb"
-                        alt="A 3D model of an astronaut"
-                        ar
-                        auto-rotate
-                        camera-controls>
+                    <model-viewer style="width: 100%; height: 500px;" src="./apollo_exterior-150k-4096.glb"
+                        alt="A 3D model of an astronaut" ar auto-rotate camera-controls>
+                        <button class="Hotspot" slot="hotspot-1" data-position="15.017187266342944m 54.79718087082787m 118.59482251277589m" data-normal="0.11263660565695056m 0.37920040346888784m 0.9184334755849841m" data-visibility-attribute="visible" onclick="bounceModel()">
+                            <div class="HotspotAnnotation">bounce</div>
+                        </button>
+                        <div class="progress-bar hide" slot="progress-bar">
+                            <div class="update-bar"></div>
+                        </div>
+                        <button slot="ar-button" id="ar-button">
+                            View in your space
+                        </button>
                     </model-viewer>
+                    <script>
+                        function bounceModel() {
+                            const modelViewer = document.querySelector('model-viewer[src="./apollo_exterior-150k-4096.glb"]');
+                            modelViewer.cameraOrbit = '0deg 0deg 1.5m'; // Adjust the orbit for bounce effect
+                            modelViewer.jump = true; // Trigger the bounce effect
+                        }
+                    </script>
                 </div>
             </div>
             <div class="artifact-images">
@@ -280,16 +323,31 @@
                     <span class="read-more">Read more</span>
                 </div>
                 <div class="artifact-space">
-                    <model-viewer
-                        style="width: 100%; height: 500px;"
-                        src="./apollo_interior-medium_resolution.glb"
-                        alt="A 3D model of an astronaut"
-                        ar
-                        auto-rotate
-                        camera-controls>
+                    <model-viewer style="width: 100%; height: 500px;" src="./apollo_interior-medium_resolution.glb"
+                        alt="A 3D model of an astronaut" ar auto-rotate camera-controls id="modelViewer">
+                        <button class="Hotspot" slot="hotspot-1" data-position="15.017187266342944m 54.79718087082787m 118.59482251277589m" data-normal="0.11263660565695056m 0.37920040346888784m 0.9184334755849841m" data-visibility-attribute="visible" id="surpriseButton">
+                            <div class="HotspotAnnotation">Surprise</div>
+                        </button>
+                        <div class="progress-bar hide" slot="progress-bar">
+                            <div class="update-bar"></div>
+                        </div>
+                        <button slot="ar-button" id="ar-button">
+                            View in your space
+                        </button>
                     </model-viewer>
                 </div>
             </div>
+            <script>
+                const modelViewer = document.getElementById('modelViewer');
+                const surpriseButton = document.getElementById('surpriseButton');
+
+                surpriseButton.addEventListener('click', () => {
+                    modelViewer.cameraOrbit = '0deg 90deg 1.5m'; // Zoom in
+                    setTimeout(() => {
+                        modelViewer.cameraOrbit = '0deg 90deg 2m'; // Zoom out
+                    }, 1000); // Adjust the duration as needed
+                });
+            </script>
             <div class="artifact-images">
                 <img src="images/Interior 1st.png" alt="Interior front view">
                 <img src="images/Interior 2nd.png" alt="Interior side view">
